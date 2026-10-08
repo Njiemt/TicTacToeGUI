@@ -2,9 +2,9 @@ import java.util.Scanner;
 
 public class TicTacToe
 {
-    private static final int ROWS = 3;
-    private static final int COLS = 3;
-    private static String board[][] = new String[ROWS][COLS];
+    public static final int ROWS = 3;
+    public static final int COLS = 3;
+    public static String[][] board = new String[ROWS][COLS];
 
     public static void main(String[] args)
     {
@@ -74,7 +74,7 @@ public class TicTacToe
         input.close();
     }
 
-    private static void clearBoard()
+    public static void clearBoard()
     {
         for (int row = 0; row < ROWS; row++)
         {
@@ -85,7 +85,7 @@ public class TicTacToe
         }
     }
 
-    private static void showBoard()
+    public static void showBoard()
     {
         IO.println("");
         IO.println("  1   2   3");
@@ -109,15 +109,18 @@ public class TicTacToe
         IO.println("");
     }
 
-    private static boolean isValidMove(int row, int col)
+    public static boolean isValidMove(int row, int col)
     {
         boolean retVal = false;
-        if (board[row][col].equals(" "))
+        if (row >= 0 && row < ROWS && col >= 0 && col < COLS
+                && board[row][col].equals(" "))
+        {
             retVal = true;
+        }
         return retVal;
     }
 
-    private static boolean isWin(String player)
+    public static boolean isWin(String player)
     {
         if (isColWin(player) || isRowWin(player) || isDiagnalWin(player))
         {
@@ -126,7 +129,7 @@ public class TicTacToe
         return false;
     }
 
-    private static boolean isRowWin(String player)
+    public static boolean isRowWin(String player)
     {
         for (int row = 0; row < ROWS; row++)
         {
@@ -138,7 +141,7 @@ public class TicTacToe
         return false;
     }
 
-    private static boolean isColWin(String player)
+    public static boolean isColWin(String player)
     {
         for (int col = 0; col < COLS; col++)
         {
@@ -150,7 +153,7 @@ public class TicTacToe
         return false;
     }
 
-    private static boolean isDiagnalWin(String player)
+    public static boolean isDiagnalWin(String player)
     {
         if (board[0][0].equals(player) && board[1][1].equals(player) && board[2][2].equals(player))
         {
@@ -163,9 +166,8 @@ public class TicTacToe
         return false;
     }
 
-    private static boolean isTie()
+    public static boolean isTie()
     {
-
         boolean row0blocked = false;
         boolean row1blocked = false;
         boolean row2blocked = false;
@@ -175,13 +177,11 @@ public class TicTacToe
         boolean diag1blocked = false;
         boolean diag2blocked = false;
 
-
         if ((board[0][0].equals("X") || board[0][1].equals("X") || board[0][2].equals("X")) &&
                 (board[0][0].equals("O") || board[0][1].equals("O") || board[0][2].equals("O")))
         {
             row0blocked = true;
         }
-
 
         if ((board[1][0].equals("X") || board[1][1].equals("X") || board[1][2].equals("X")) &&
                 (board[1][0].equals("O") || board[1][1].equals("O") || board[1][2].equals("O")))
@@ -189,13 +189,11 @@ public class TicTacToe
             row1blocked = true;
         }
 
-
         if ((board[2][0].equals("X") || board[2][1].equals("X") || board[2][2].equals("X")) &&
                 (board[2][0].equals("O") || board[2][1].equals("O") || board[2][2].equals("O")))
         {
             row2blocked = true;
         }
-
 
         if ((board[0][0].equals("X") || board[1][0].equals("X") || board[2][0].equals("X")) &&
                 (board[0][0].equals("O") || board[1][0].equals("O") || board[2][0].equals("O")))
@@ -203,13 +201,11 @@ public class TicTacToe
             col0blocked = true;
         }
 
-
         if ((board[0][1].equals("X") || board[1][1].equals("X") || board[2][1].equals("X")) &&
                 (board[0][1].equals("O") || board[1][1].equals("O") || board[2][1].equals("O")))
         {
             col1blocked = true;
         }
-
 
         if ((board[0][2].equals("X") || board[1][2].equals("X") || board[2][2].equals("X")) &&
                 (board[0][2].equals("O") || board[1][2].equals("O") || board[2][2].equals("O")))
@@ -217,13 +213,11 @@ public class TicTacToe
             col2blocked = true;
         }
 
-
         if ((board[0][0].equals("X") || board[1][1].equals("X") || board[2][2].equals("X")) &&
                 (board[0][0].equals("O") || board[1][1].equals("O") || board[2][2].equals("O")))
         {
             diag1blocked = true;
         }
-
 
         if ((board[0][2].equals("X") || board[1][1].equals("X") || board[2][0].equals("X")) &&
                 (board[0][2].equals("O") || board[1][1].equals("O") || board[2][0].equals("O")))
@@ -231,13 +225,8 @@ public class TicTacToe
             diag2blocked = true;
         }
 
-        if (row0blocked && row1blocked && row2blocked &&
-                col0blocked && col1blocked && col2blocked &&
-                diag1blocked && diag2blocked)
-        {
-            return true;
-        }
-
-        return false;
+        return row0blocked && row1blocked && row2blocked
+                && col0blocked && col1blocked && col2blocked
+                && diag1blocked && diag2blocked;
     }
 }
